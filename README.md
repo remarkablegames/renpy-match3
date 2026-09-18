@@ -1,16 +1,13 @@
 <p align="center">
-  <img src="web-icon.png" width="250" alt="Ren'Py Template">
+  <img src="game/gui/window_icon.png" width="250" alt="Ren'Py Template">
 </p>
 
 # Ren'Py Template
 
-[![release](https://img.shields.io/github/v/release/remarkablegames/renpy-match3)](https://github.com/remarkablegames/renpy-match3/releases)
 [![build](https://github.com/remarkablegames/renpy-match3/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablegames/renpy-match3/actions/workflows/build.yml)
 [![lint](https://github.com/remarkablegames/renpy-match3/actions/workflows/lint.yml/badge.svg)](https://github.com/remarkablegames/renpy-match3/actions/workflows/lint.yml)
 
-📖 Write visual novels with Ren'Py Template.
-
-Play in your browser:
+3️⃣ Ren'Py match 3 minigame demo:
 
 - [remarkablegames](https://remarkablegames.org/renpy-match3/)
 
@@ -52,15 +49,6 @@ Clone the repository to the `Projects Directory`:
 git clone https://github.com/remarkablegames/renpy-match3.git
 cd renpy-match3
 ```
-
-Replace the assets:
-
-- [ ] `game/gui/main_menu.png`
-- [ ] `game/gui/window_icon.png`
-- [ ] [`icon.icns`](https://anyconv.com/png-to-icns-converter/)
-- [ ] [`icon.ico`](https://anyconv.com/png-to-ico-converter/)
-- [ ] `web-icon.png`
-- [ ] `web-presplash.webp`
 
 ## Run
 
