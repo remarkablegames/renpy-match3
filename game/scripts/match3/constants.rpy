@@ -24,7 +24,6 @@ init -1 python:
     BOARD_X = (1920 - BOARD_PX) // 2
     BOARD_Y = 275
 
-
     TARGET_SCORE = 1500
     MAX_MOVES = 15
 
