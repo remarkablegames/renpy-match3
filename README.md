@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="game/gui/window_icon.png" width="250" alt="Ren'Py Match3">
+  <img src="game/images/match3/blueberries.png" width="200" alt="Ren'Py Match3">
 </p>
 
 # Ren'Py Match3
