@@ -4,21 +4,15 @@
 
 # Ren'Py Template
 
-[![release](https://img.shields.io/github/v/release/remarkablegames/renpy-template)](https://github.com/remarkablegames/renpy-template/releases)
-[![build](https://github.com/remarkablegames/renpy-template/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablegames/renpy-template/actions/workflows/build.yml)
-[![lint](https://github.com/remarkablegames/renpy-template/actions/workflows/lint.yml/badge.svg)](https://github.com/remarkablegames/renpy-template/actions/workflows/lint.yml)
+[![release](https://img.shields.io/github/v/release/remarkablegames/renpy-match3)](https://github.com/remarkablegames/renpy-match3/releases)
+[![build](https://github.com/remarkablegames/renpy-match3/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablegames/renpy-match3/actions/workflows/build.yml)
+[![lint](https://github.com/remarkablegames/renpy-match3/actions/workflows/lint.yml/badge.svg)](https://github.com/remarkablegames/renpy-match3/actions/workflows/lint.yml)
 
 📖 Write visual novels with Ren'Py Template.
 
 Play in your browser:
 
-- [remarkablegames](https://remarkablegames.org/renpy-template/)
-
-Or download for desktop:
-
-- [Windows](https://github.com/remarkablegames/renpy-template/releases/latest/download/win.zip)
-- [Mac](https://github.com/remarkablegames/renpy-template/releases/latest/download/mac.zip)
-- [Linux](https://github.com/remarkablegames/renpy-template/releases/latest/download/linux.tar.bz2)
+- [remarkablegames](https://remarkablegames.org/renpy-match3/)
 
 ## Credits
 
@@ -55,18 +49,8 @@ renpy --version
 Clone the repository to the `Projects Directory`:
 
 ```sh
-git clone https://github.com/remarkablegames/renpy-template.git
-cd renpy-template
-```
-
-Rename the project:
-
-```sh
-git grep -l "Ren'Py Template" | xargs sed -i '' -e "s/Ren'Py Template/My Novel/g"
-```
-
-```sh
-git grep -l 'renpy-template' | xargs sed -i '' -e 's/renpy-template/my-novel/g'
+git clone https://github.com/remarkablegames/renpy-match3.git
+cd renpy-match3
 ```
 
 Replace the assets:
