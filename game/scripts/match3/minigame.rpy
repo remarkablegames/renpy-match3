@@ -12,16 +12,29 @@ init -1 python:
             self.moves_left = MAX_MOVES
             self.target = TARGET_SCORE
             self.selected = None
+            self.anim_cells = set()
             self.won = False
             self.lost = False
 
-        def attempt_swap(self, r1, c1, r2, c2):
+        def begin_swap(self, r1, c1, r2, c2):
+            if not self.board.would_match(r1, c1, r2, c2):
+                return False
+            self.moves_left -= 1
+            self.anim_cells = {(r1, c1), (r2, c2)}
+            return True
+
+        def animate_swap(self, r1, c1, r2, c2):
+            renpy.show_screen("match3_swap_anim", source=(r1, c1), target=(r2, c2))
+            renpy.pause(0.18)
+            renpy.hide_screen("match3_swap_anim")
+
+        def finish_swap(self, r1, c1, r2, c2):
             self.board.swap(r1, c1, r2, c2)
-            if self.board.find_matches():
-                self.moves_left -= 1
-                return True
-            self.board.swap(r1, c1, r2, c2)
-            return False
+            self.anim_cells = set()
+            renpy.pause(0.06)
+            self.cascade()
+            self.ensure_moves()
+            self.check_end()
 
         def cascade(self):
             cells = self.board.find_matches()
@@ -52,6 +65,18 @@ init -1 python:
             if self.lost:
                 return ("lose", self.score)
             return ("quit", self.score)
+
+
+transform match3_glide(source, target):
+    subpixel True
+    pos (BOARD_X + source[1] * TILE_SIZE, BOARD_Y + source[0] * TILE_SIZE)
+    linear 0.15 pos (BOARD_X + target[1] * TILE_SIZE, BOARD_Y + target[0] * TILE_SIZE)
+
+
+transform match3_glide_reverse(source, target):
+    subpixel True
+    pos (BOARD_X + target[1] * TILE_SIZE, BOARD_Y + target[0] * TILE_SIZE)
+    linear 0.15 pos (BOARD_X + source[1] * TILE_SIZE, BOARD_Y + source[0] * TILE_SIZE)
 
 
 screen match3_screen():
@@ -86,12 +111,13 @@ screen match3_screen():
 
         for r in range(BOARD_ROWS):
             for c in range(BOARD_COLS):
-                imagebutton:
-                    idle Transform(TILE_IMAGES[match3_game.board.get(r, c)], zoom=TILE_SCALE)
-                    hover Transform(TILE_IMAGES[match3_game.board.get(r, c)], zoom=TILE_SCALE)
-                    xpos BOARD_X + c * TILE_SIZE
-                    ypos BOARD_Y + r * TILE_SIZE
-                    action Return(("tap", r, c))
+                if (r, c) not in match3_game.anim_cells:
+                    imagebutton:
+                        idle Transform(TILE_IMAGES[match3_game.board.get(r, c)], zoom=TILE_SCALE)
+                        hover Transform(TILE_IMAGES[match3_game.board.get(r, c)], zoom=TILE_SCALE)
+                        xpos BOARD_X + c * TILE_SIZE
+                        ypos BOARD_Y + r * TILE_SIZE
+                        action Return(("tap", r, c))
 
         frame:
             xalign 0.5
@@ -118,7 +144,7 @@ screen match3_screen():
             ypos HUD_BAR_Y
 
         textbutton "Quit":
-            xalign 0.8
+            xalign 0.75
             yalign 0.05
             text_size 28
             text_color "#1b202c"
@@ -127,6 +153,13 @@ screen match3_screen():
             hover_background Solid("#ffffffDD")
             padding (24, 10)
             action Return(("quit",))
+
+
+screen match3_swap_anim(source, target):
+    zorder 200
+
+    add TILE_IMAGES[match3_game.board.get(source[0], source[1])] zoom TILE_SCALE at match3_glide(source, target)
+    add TILE_IMAGES[match3_game.board.get(target[0], target[1])] zoom TILE_SCALE at match3_glide_reverse(source, target)
 
 
 label match3_play:
@@ -161,11 +194,10 @@ label match3_play:
                     elif (r, c) in g.board.neighbors(g.selected[0], g.selected[1]):
                         sr, sc = g.selected
                         g.selected = None
-                        if g.attempt_swap(sr, sc, r, c):
+                        if g.begin_swap(sr, sc, r, c):
                             renpy.play("audio/ui/switch13.ogg", channel="sound")
-                            g.cascade()
-                            g.ensure_moves()
-                            g.check_end()
+                            g.animate_swap(sr, sc, r, c)
+                            g.finish_swap(sr, sc, r, c)
                     else:
                         g.selected = (r, c)
                         renpy.play("audio/ui/click_003.ogg", channel="sound")

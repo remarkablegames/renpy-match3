@@ -45,6 +45,12 @@ init -1 python:
         def swap(self, r1, c1, r2, c2):
             self.grid[r1][c1], self.grid[r2][c2] = self.grid[r2][c2], self.grid[r1][c1]
 
+        def would_match(self, r1, c1, r2, c2):
+            self.swap(r1, c1, r2, c2)
+            result = bool(self.find_matches())
+            self.swap(r1, c1, r2, c2)
+            return result
+
         def find_matches(self):
             matches = set()
             for r in range(self.rows):
