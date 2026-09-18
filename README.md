@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="game/gui/window_icon.png" width="250" alt="Ren'Py Template">
+  <img src="game/gui/window_icon.png" width="250" alt="Ren'Py Match3">
 </p>
 
-# Ren'Py Template
+# Ren'Py Match3
 
 [![build](https://github.com/remarkablegames/renpy-match3/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablegames/renpy-match3/actions/workflows/build.yml)
 [![lint](https://github.com/remarkablegames/renpy-match3/actions/workflows/lint.yml/badge.svg)](https://github.com/remarkablegames/renpy-match3/actions/workflows/lint.yml)
