@@ -1,1 +1,1 @@
-define e = Character("Eileen")
+define e = Character("Eileen", image="eileen")
