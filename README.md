@@ -11,6 +11,14 @@
 
 - [remarkablegames](https://remarkablegames.org/renpy-match3/)
 
+## Features
+
+- 8×8 board of fruit tiles with click-to-swap matching
+- Match three or more of the same fruit in a row or column
+- Cascades chain follow-up matches for bonus points
+- Reach the target score of 1500 in 15 moves to win
+- Win, lose, and quit outcomes continue the story scene
+
 ## Credits
 
 ### Art
