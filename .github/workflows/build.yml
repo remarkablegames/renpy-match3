@@ -1,0 +1,69 @@
+name: build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Ren'Py
+        uses: remarkablegames/setup-renpy@v2
+        with:
+          web: true
+
+      - name: Delete unnecessary files
+        run: >
+          find . -type f
+          ! -name 'icon.*'
+          ! -name 'progressive_download.txt'
+          ! -name 'version.txt'
+          ! -name 'web-*'
+          ! -path '*/.*'
+          ! -path './game/*'
+          -delete
+
+      # build first so web artifacts are not included
+      - name: Build desktop distributions
+        if: github.event_name == 'workflow_dispatch'
+        run: renpy-launcher distribute . --dest ../dists
+
+      - name: Build web
+        run: renpy-launcher web_build . --destination web
+
+      - name: Page test
+        uses: remarkablemark/page-test-action@v1
+        with:
+          url: http://localhost:8000
+          start: python -m http.server --directory web
+          wait-on: http://localhost:8000
+
+      - name: Deploy site
+        if: github.event_name != 'workflow_dispatch' && github.ref_name == 'master'
+        uses: remarkablemark/gitploy-action@v1
+        with:
+          directory: web
+
+      - name: Prepare distribution artifact
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          mkdir artifact
+          cp ../dists/*-win.zip artifact
+          cp ../dists/*-linux.tar.bz2 artifact
+          cp ../dists/*-mac.zip artifact
+          cp -R web artifact
+
+      - name: Upload distribution artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v7
+        with:
+          name: distributions
+          path: artifact
